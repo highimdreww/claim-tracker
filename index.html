@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim Tracker</title>
+<meta name="description" content="Log a claim number as Approve or RWE with the time and a per-user approval count. Drew, Margo, and William stay separated, with an overall daily total.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div>
+      <h1>Claim Tracker</h1>
+      <p class="sub" id="todayLabel"></p>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost" id="exportCsvBtn" type="button">Export CSV</button>
+      <button class="btn ghost" id="exportJsonBtn" type="button">Backup</button>
+      <label class="btn ghost file-btn">Import
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+      </label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card">
+    <div class="label">Who is logging?</div>
+    <div class="user-tabs" id="userTabs" role="tablist"></div>
+
+    <div class="label" style="margin-top:18px;">Date</div>
+    <div class="date-row">
+      <button class="btn ghost" id="prevDayBtn" type="button">Prev day</button>
+      <input type="date" id="dateInput">
+      <button class="btn ghost" id="todayBtn" type="button">Today</button>
+      <button class="btn ghost" id="nextDayBtn" type="button">Next day</button>
+    </div>
+
+    <div id="overallBreakdown" class="breakdown" hidden></div>
+
+    <div class="stats" id="stats"></div>
+
+    <form id="logForm" class="log-form">
+      <input id="claimInput" type="text" placeholder="Claim number, e.g. FPI264739" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <div class="decision-row">
+        <button class="btn approve" id="approveBtn" type="submit" data-decision="Approve">Approve · Yes</button>
+        <button class="btn rwe" id="rweBtn" type="button" data-decision="RWE">RWE · No</button>
+      </div>
+      <p class="hint" id="logHint"></p>
+    </form>
+    <div id="banner" class="banner" hidden></div>
+  </section>
+
+  <section class="card">
+    <div class="log-head">
+      <h2 id="logTitle">Log</h2>
+      <input id="searchInput" type="search" placeholder="Search claim number">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Time</th><th>Claim</th><th id="userColHead" hidden>User</th><th>Decision</th><th>Approval #</th><th></th></tr>
+        </thead>
+        <tbody id="logBody"></tbody>
+      </table>
+      <p id="emptyState" class="empty" hidden>Nothing logged yet for this view.</p>
+    </div>
+  </section>
+
+  <p class="foot">Entries are saved in this browser only. Use Backup to save a copy, and Import on another computer to merge its entries into the overall total.</p>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
